@@ -1,0 +1,598 @@
+/* =================================
+   CONFIGURAÇÕES GERAIS
+================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+
+    background: linear-gradient(
+        135deg,
+        #3b1025,
+        #811e46,
+        #d44876
+    );
+
+    font-family: Georgia, serif;
+    color: white;
+
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+
+    padding: 70px 15px 100px;
+
+    overflow-x: hidden;
+}
+
+
+/* =================================
+   CONTAINER
+================================= */
+
+.container {
+    width: 100%;
+    text-align: center;
+
+    position: relative;
+    z-index: 2;
+}
+
+.container h1 {
+    color: #ffd1df;
+
+    font-size: 30px;
+
+    margin-bottom: 180px;
+
+    text-shadow: 0 0 15px #ff8eae;
+
+    transition: margin 0.8s ease;
+}
+
+/* Reserva espaço para a carta aberta */
+
+.container:has(.envelope.aberto) h1 {
+    margin-bottom: 300px;
+}
+
+
+/* =================================
+   ENVELOPE
+================================= */
+
+.envelope {
+    width: 260px;
+    height: 170px;
+
+    background: #c93670;
+
+    position: relative;
+
+    margin: auto;
+
+    border-radius: 5px;
+
+    cursor: pointer;
+
+    box-shadow: 0 10px 35px #260515;
+
+    isolation: isolate;
+
+    overflow: visible;
+}
+
+
+/* =================================
+   CARTA
+================================= */
+
+.carta {
+    position: absolute;
+
+    width: 290px;
+    height: 270px;
+
+    left: 50%;
+    bottom: 0;
+
+    transform: translate(-50%, 100%);
+
+    background: #fff0e5;
+
+    border-radius: 6px;
+
+    padding: 20px;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: flex-start;
+
+    z-index: 2;
+
+    opacity: 0;
+
+    transition:
+        transform 1s ease,
+        opacity 0.25s ease;
+
+    box-shadow: 0 0 20px #ffb6cc;
+}
+
+
+/* CONTEÚDO DA CARTA */
+
+.texto-carta {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    text-align: center;
+
+    overflow: hidden;
+
+    overflow-wrap: break-word;
+}
+
+.texto-carta h2 {
+    color: #b52c61;
+
+    font-size: 21px;
+
+    margin-bottom: 15px;
+}
+
+.texto-carta p {
+    color: #8b2349;
+
+    font-size: 13px;
+
+    line-height: 1.6;
+
+    text-align: center;
+}
+
+
+/* =================================
+   FRENTE DO ENVELOPE
+================================= */
+
+.envelope::after {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background: #c93670;
+
+    clip-path: polygon(
+        0 0,
+        50% 58%,
+        100% 0,
+        100% 100%,
+        0 100%
+    );
+
+    border-radius: 0 0 5px 5px;
+
+    z-index: 3;
+
+    pointer-events: none;
+}
+
+
+/* =================================
+   ABA DO ENVELOPE
+================================= */
+
+.aba {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 0;
+    height: 0;
+
+    border-left: 130px solid transparent;
+    border-right: 130px solid transparent;
+
+    border-top: 95px solid #ff8bb5;
+
+    transform-origin: top center;
+
+    transition: transform 0.8s ease;
+
+    z-index: 5;
+
+    backface-visibility: visible;
+}
+
+
+/* =================================
+   SELO DO ENVELOPE
+================================= */
+
+.selo {
+    position: absolute;
+
+    top: 65px;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    font-size: 35px;
+
+    z-index: 6;
+
+    filter: drop-shadow(0 0 8px #ffb6cc);
+
+    transition: opacity 0.4s;
+}
+
+
+/* =================================
+   ANIMAÇÃO DE ABERTURA
+================================= */
+
+.envelope.aberto .aba {
+    transform: rotateX(180deg);
+
+    opacity: 0;
+}
+
+.envelope.aberto .selo {
+    opacity: 0;
+}
+
+.envelope.aberto .carta {
+    transform: translate(-50%, -170px);
+
+    opacity: 1;
+
+    transition:
+        transform 1s ease,
+        opacity 0.25s ease 0.55s;
+}
+
+
+/* =================================
+   INSTRUÇÕES
+================================= */
+
+#instrucao {
+    margin-top: 45px;
+
+    color: #ffe0e9;
+
+    font-size: 15px;
+}
+
+
+/* =================================
+   BOTÃO
+================================= */
+
+#revelar {
+    display: none;
+
+    margin: 25px auto 0;
+
+    padding: 13px 28px;
+
+    background: #e83e80;
+
+    color: white;
+
+    border: none;
+
+    border-radius: 30px;
+
+    cursor: pointer;
+
+    font-size: 16px;
+
+    font-family: Georgia, serif;
+
+    box-shadow: 0 0 15px #ff78a9;
+
+    transition: 0.3s;
+}
+
+#revelar:hover {
+    background: #ff78a9;
+
+    transform: scale(1.08);
+}
+
+
+/* =================================
+   CORAÇÃO DE PARTÍCULAS
+================================= */
+
+.heart-container {
+    display: none;
+
+    width: 100%;
+
+    max-width: 400px;
+
+    margin: 20px auto;
+}
+
+canvas {
+    display: block;
+
+    width: 100%;
+
+    max-width: 400px;
+
+    height: auto;
+
+    margin: auto;
+
+    filter: drop-shadow(0 0 15px #ff247f);
+}
+
+
+/* =================================
+   ANIMAÇÕES DE FUNDO
+================================= */
+
+.flor {
+    position: fixed;
+
+    bottom: -30px;
+
+    font-size: 20px;
+
+    animation: flutuar 7s linear forwards;
+
+    pointer-events: none;
+
+    z-index: 1;
+}
+
+@keyframes flutuar {
+
+    0% {
+        transform: translateY(0) rotate(0deg);
+
+        opacity: 0;
+    }
+
+    20% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(-110vh) rotate(360deg);
+
+        opacity: 0;
+    }
+
+}
+
+
+/* =================================
+   ESTRELAS
+================================= */
+
+body::before {
+    content: "";
+
+    position: fixed;
+
+    inset: 0;
+
+    background-image:
+
+        radial-gradient(
+            2px 2px at 20% 30%,
+            white,
+            transparent
+        ),
+
+        radial-gradient(
+            2px 2px at 70% 60%,
+            #ff78a9,
+            transparent
+        ),
+
+        radial-gradient(
+            2px 2px at 40% 80%,
+            white,
+            transparent
+        );
+
+    background-size: 250px 250px;
+
+    animation: estrelas 8s linear infinite;
+
+    pointer-events: none;
+
+}
+
+@keyframes estrelas {
+
+    from {
+        background-position: 0 0;
+    }
+
+    to {
+        background-position: 250px 250px;
+    }
+
+}
+
+
+/* =================================
+   RESPONSIVIDADE
+================================= */
+
+@media (max-width: 480px) {
+
+    body {
+        padding-top: 60px;
+    }
+
+    .container h1 {
+        font-size: 24px;
+        margin-bottom: 160px;
+    }
+
+    .container:has(.envelope.aberto) h1 {
+        margin-bottom: 300px;
+    }
+
+    .envelope {
+        width: 230px;
+    }
+
+    .aba {
+        border-left-width: 115px;
+        border-right-width: 115px;
+    }
+
+    .carta {
+        width: 270px;
+        height: 270px;
+    }
+
+    .envelope.aberto .carta {
+        transform: translate(-50%, -170px);
+    }
+
+}
+
+/* =================================
+   EXPLOSÃO DE CORAÇÕES
+================================= */
+
+.burst-heart {
+
+    position: fixed;
+
+    font-size: 22px;
+
+    pointer-events: none;
+
+    z-index: 20;
+
+    animation: explosao 1.6s ease-out forwards;
+
+    filter: drop-shadow(0 0 8px #ff5c9a);
+
+}
+
+@keyframes explosao {
+
+    0% {
+
+        transform:
+            translate(0, 0)
+            scale(0.2)
+            rotate(0deg);
+
+        opacity: 1;
+
+    }
+
+    100% {
+
+        transform:
+            translate(var(--dx), var(--dy))
+            scale(1.4)
+            rotate(var(--rot));
+
+        opacity: 0;
+
+    }
+
+}
+
+/* CONTROLE DA MÚSICA */
+
+#controleMusica {
+
+    display: none;
+
+    margin: 15px auto;
+
+    padding: 10px 22px;
+
+    background: rgba(255, 255, 255, 0.12);
+
+    color: #ffe0e9;
+
+    border: 1px solid #ffb6cc;
+
+    border-radius: 25px;
+
+    font-family: Georgia, serif;
+
+    font-size: 14px;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+
+}
+
+#controleMusica:hover {
+
+    background: #e83e80;
+
+    transform: scale(1.05);
+
+}
+
+/* MENSAGEM FINAL */
+
+#fraseFinal {
+    max-width: 480px;
+
+    margin: 15px auto 30px;
+
+    padding: 0 18px;
+
+    color: #ffe0e9;
+
+    font-family: Georgia, serif;
+
+    font-size: 17px;
+
+    line-height: 1.8;
+
+    text-align: center;
+
+    text-shadow: 0 0 12px #ff8eae;
+
+    opacity: 0;
+
+    transform: translateY(15px);
+
+    transition:
+        opacity 1.2s ease,
+        transform 1.2s ease;
+}
+
+#fraseFinal.visivel {
+    opacity: 1;
+
+    transform: translateY(0);
+}
+
